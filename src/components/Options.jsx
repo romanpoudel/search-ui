@@ -68,8 +68,12 @@ const Options = () => {
                     onChange={handleSelectChange}
                     value={contents?.[selectedIndex]?.title || ""} 
                 >
-                    {contents.filter((option) => {
-                        return search.toLowerCase() === '' ? option : (option.title.toLowerCase().includes(search) && (option.category==dropdown.category || Number(option.price)<Number(dropdown.price) ))
+                    {contents.filter((item) => {
+                            const isSearchMatch = search.toLowerCase() === '' || item.title.toLowerCase().includes(search);
+                            const isCategoryMatch = item.category === dropdown.category;
+                            const isPriceMatch = Number(item.price) < Number(dropdown.price);
+                            
+                            return isSearchMatch && isCategoryMatch || isPriceMatch;
                     }).map((option, index) => (
                         <List key={option.id} value={option.title} label={option.title} isSelected={index === selectedIndex} />
                     ))}
