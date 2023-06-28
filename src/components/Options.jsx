@@ -79,7 +79,9 @@ const Options = () => {
                     onChange={handleSelectChange}
                     value={contents?.[selectedIndex]?.title || ""} // Select the option based on the selectedIndex
                 >
-                    {contents.map((option, index) => (
+                    {contents.filter((option) => {
+                        return search.toLowerCase() === '' ? option : option.title.toLowerCase().includes(search)
+                    }).map((option, index) => (
                         <List key={option.id} value={option.title} label={option.title} isSelected={index === selectedIndex} />
                     ))}
                 </select>
