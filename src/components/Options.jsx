@@ -79,8 +79,8 @@ const Options = () => {
                     onChange={handleSelectChange}
                     value={contents?.[selectedIndex]?.title || ""} // Select the option based on the selectedIndex
                 >
-                    {options.map((option, index) => (
-                        <List key={option.value} value={option.value} label={option.label} isSelected={index === selectedIndex} />
+                    {contents.map((option, index) => (
+                        <List key={option.id} value={option.title} label={option.title} isSelected={index === selectedIndex} />
                     ))}
                 </select>
             </div>
