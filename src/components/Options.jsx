@@ -69,7 +69,7 @@ const Options = () => {
                     value={contents?.[selectedIndex]?.title || ""} 
                 >
                     {contents.filter((option) => {
-                        return search.toLowerCase() === '' ? option : (option.title.toLowerCase().includes(search) && option.category.includes(dropdown.category) || Number(option.price)<Number(dropdown.price) )
+                        return search.toLowerCase() === '' ? option : (option.title.toLowerCase().includes(search) && (option.category==dropdown.category || Number(option.price)<Number(dropdown.price) ))
                     }).map((option, index) => (
                         <List key={option.id} value={option.title} label={option.title} isSelected={index === selectedIndex} />
                     ))}
