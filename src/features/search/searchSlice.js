@@ -3,7 +3,10 @@ import axios from "axios";
 
 const initialState = {
   value: "",
-  categories:[],
+  categories:{
+    category:"",
+    price:""
+  },
   contents: [],
   isLoading: false,
   error: null,
@@ -17,14 +20,6 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
-export const fetchCategories = createAsyncThunk(
-  "products/fetchCategories",
-  async () => {
-    const res = await axios("https://fakestoreapi.com/products/categories");
-    const data = await res.data;
-    return data;
-  }
-);
 
 export const searchSlice = createSlice({
   name: "search",
@@ -33,6 +28,10 @@ export const searchSlice = createSlice({
     setTypedValue: (state, action) => {
       state.value = action.payload;
     },
+    setCategory:(state,action)=>{
+      state.categories.category=action.payload.category;
+      state.categories.price=action.payload.price;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -46,12 +45,9 @@ export const searchSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
-    builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = action.payload;
-    });
   },
 });
 
-export const { setTypedValue } = searchSlice.actions;
+export const { setTypedValue,setCategory } = searchSlice.actions;
 
 export default searchSlice.reducer;

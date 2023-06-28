@@ -1,37 +1,45 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchCategories} from '../features/search/searchSlice';
+import { setCategory } from '../features/search/searchSlice';
 
 const Sort = () => {
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedPrice, setSelectedPrice] = useState("");
+    // const [selectedCategory, setSelectedCategory] = useState("");
+    // const [selectedPrice, setSelectedPrice] = useState("");
+    const [dropdown, setDropdown] = useState({ category: "", price: "" })
 
-    // useEffect(() => {
-    //     dispatch(fetchCategories())
-    // }, [dispatch])
-    // const categories = useSelector((state) => state.search.categories)
-    // console.log(categories)
+    // const select = useSelector((state) => state.search.categories);
+    // const {category,price}=select;
+    // console.log(category)
+    const dispatch = useDispatch();
+
+    const handleCategory = (e) => {
+        setDropdown({...dropdown,category:e.target.value})
+        dispatch(setCategory(dropdown))
+    }
+    const handlePrice = (e) => {
+        setDropdown({...dropdown,price:e.target.value})
+        dispatch(setCategory(dropdown))
+    }
     return (
         <div className='flex space-x-1'>
             <div >
                 <select
                     className='border-2 rounded border-blue-400 focus:outline-none'
-                    value={selectedCategory}
-                    onChange={e => setSelectedCategory(e.target.value)}
+                    value={dropdown.category}
+                    onChange={handleCategory}
                 >
                     <option value="">Category</option>
-                    <option value="men's clothing">Men's clothing</option>
-                    <option value="women's clothing">Women's clothing</option>
+                    <option value="men">Men's clothing</option>
+                    <option value="women">Women's clothing</option>
                     <option value="electronics">Electronics</option>
                     <option value="jewellery">Jewellery</option>
                 </select>
-                {/* <Category /> */}
             </div>
             <div>
                 <select
                     className='border-2 rounded border-blue-400 focus:outline-none'
-                    value={selectedPrice}
-                    onChange={e => setSelectedPrice(e.target.value)}
+                    value={dropdown.price}
+                    onChange={handlePrice}
                 >
                     <option value="" >Price</option>
                     <option value="20">less then $20</option>
@@ -40,8 +48,6 @@ const Sort = () => {
                     <option value="200">less then $200</option>
                 </select>
             </div>
-
-
         </div>
     )
 }
